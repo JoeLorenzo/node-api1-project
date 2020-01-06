@@ -27,15 +27,20 @@ router.post("/api/users", (req, res) => {
         // this console logs the request body 
         console.log(user)
         console.log("----------------------------")   
-        res.status(201).json(user)
-        }
+        
+        db.insert(user)
+        .then(insertId => db.findById(insertId.id)
+        .then(user => {
+            res.status(201).json(user)
+            }   
+        )) 
+    }
     else {
     console.log("-----------post-------------")
     // this console logs a post error 
     console.log("missing name or bio")
     console.log("----------------------------")     
     res.status(400).json({message:"missing user name or bio"})
-    // insert(user) 
 }
 })
 router.get("/api/user/:id", (req, res) => {
