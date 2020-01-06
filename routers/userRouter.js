@@ -29,12 +29,24 @@ router.post("/api/users", (req, res) => {
         console.log("----------------------------")   
         
         db.insert(user)
+        // code with id destructured 
+        // .then( ({id}) => {
+        //     return db.findById(id)
+        // })
+        // code without destructoring 
         .then(insertId => db.findById(insertId.id)
-        .then(user => {
+            .then(user => {
             res.status(201).json(user)
-            }   
-        )) 
-    }
+            })
+            .catch(err => {
+            console.log(err)
+            res.status(500).json({message:"server error.  Problem retrieving user."})
+            }) 
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({message:"server error.  Problem inserting user."})
+            })  
+        )}
     else {
     console.log("-----------post-------------")
     // this console logs a post error 
