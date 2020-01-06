@@ -19,6 +19,25 @@ router.get("/api/users", (req,res) => {
         res.status(200).json(user)
     })
 })
+
+router.post("/api/users", (req, res) => {
+    const user = req.body
+    if (user.name && user.bio){
+        console.log("-----------post-------------")
+        // this console logs the request body 
+        console.log(user)
+        console.log("----------------------------")   
+        res.status(201).json(user)
+        }
+    else {
+    console.log("-----------post-------------")
+    // this console logs a post error 
+    console.log("missing name or bio")
+    console.log("----------------------------")     
+    res.status(400).json({message:"missing user name or bio"})
+    // insert(user) 
+}
+})
 router.get("/api/user/:id", (req, res) => {
     const id = req.params.id
     db.findById(id)
@@ -40,7 +59,7 @@ router.get("/api/user/:id", (req, res) => {
     })
     .catch(err => {
         console.log(err)
-        res.status(500).json({message: "The user information could not be retrieved"})
+        res.status(500).json({message: "The user's information could not be retrieved"})
     })
 })
 // this syntax exports the module
