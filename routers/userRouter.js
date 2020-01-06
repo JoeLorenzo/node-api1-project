@@ -38,6 +38,10 @@ router.get("/api/user/:id", (req, res) => {
             res.status(404).json({errorMessage:"User not found"})
             }
     })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({message: "The user information could not be retrieved"})
+    })
 })
 // this syntax exports the module
 module.exports = router
