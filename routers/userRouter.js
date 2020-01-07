@@ -79,5 +79,26 @@ router.get("/api/user/:id", (req, res) => {
         res.status(500).json({message: "The user's information could not be retrieved"})
     })
 })
+              
+router.delete("/api/user/:id", (req, res) => {
+    const id = (req.params.id)
+    db.findById(id)
+    .then(user => {
+        console.log(user)
+        db.remove(user.id)
+        .then(user => {
+            console.log(user)
+            res.status(204).json({message: "User removed"})
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({message: "Server error.  User could not be removed"}) 
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(404).json({message: "User up for removal not found"})
+    })
+})
 // this syntax exports the module
 module.exports = router
